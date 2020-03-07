@@ -4,8 +4,6 @@ var gifRating;
 var motion = "still";
 var harryPotter = ["Harry_Potter", "Hermione_Granger", "Ron_Weasley", "Severus_Snape", "Albus_Dumbledore", "Voldemort", "Hagrid", "Draco_Malfoy", "Hedwig"];
 
-printButtons();
-
 function printButtons() {
 
   $("#buttons").empty();
@@ -87,4 +85,6 @@ $(document.body).on("click", ".gif", function () {
     $(this).attr("data-state", "still");
   }
 });
+
+printButtons();
 
