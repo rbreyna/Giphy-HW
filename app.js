@@ -2,7 +2,7 @@
 var API_key = "pmFmeC78sVzcqR0XlcIlnt5MTUi82reS";
 var gifRating;
 var motion = "still";
-var harryPotter = ["Harry_Potter", "Hermione_Granger", "Ron_Weasley", "Severus_Snape", "Albus_Dumbledore", "Voldemort", "Hagrid", "Sirius_Black", "Draco_Malfoy", "Neville_Longbottom", "Hedwig"];
+var harryPotter = ["Harry_Potter", "Hermione_Granger", "Ron_Weasley", "Severus_Snape", "Albus_Dumbledore", "Voldemort", "Hagrid", "Draco_Malfoy", "Hedwig"];
 
 printButtons();
 
@@ -12,12 +12,12 @@ function printButtons() {
 
   for (i = 0; i < harryPotter.length; i++) {
 
-    var character = harryPotter[i].replace(/_/g," ");
+    var character = harryPotter[i].replace(/_/g, " ");
     var button = $("<button>");
 
-    button.attr("class", "gif");
+    button.attr("class", "btn");
     button.html(character);
-    button.attr("value",character);
+    button.attr("value", character);
 
     $("#buttons").append(button);
 
@@ -42,31 +42,32 @@ function printGifs(name) {
     for (i = 0; i < 10; i++) {
 
       var gifBin = $("<div>");
-      gifBin.attr("id", "images");
+      gifBin.attr("class", "images");
 
       var rating = response.data[i].rating;
       rating = "Rating: " + rating.toUpperCase();
 
-      var newGif = $("<img id = 'gif'>");
+      var newGif = $("<img class = 'gif'>");
 
-      newGif.attr("data-still", response.data[i].images.downsized_still.url);
-      newGif.attr("data-animate", response.data[i].url);
-      newGif.attr("still-state", "still");
+      newGif.attr("data-still", response.data[i].images.fixed_height_still.url);
+      newGif.attr("data-animate", response.data[i].images.fixed_height.url);
+      newGif.attr("data-state", "still");
       newGif.attr("src", newGif.attr("data-still"));
 
       gifBin.html(rating + "<br>");
       gifBin.append(newGif);
 
-      $("#gifs_container").append(gifBin);
+      $("#gifs_container").prepend(gifBin);
     }
-
   });
-
 }
+$("#submit").on("click", function(){
+  harryPotter.push($("#input-text").val().trim());
+  console.log(harryPotter);
+  printButtons();
+})
 
-$(document.body).on("click", ".gif", function () {
-
-  //$("#gif_container").empty()
+$(document.body).on("click", ".btn", function () {
 
   search = $(this).val();
   //console.log(search);
@@ -74,16 +75,16 @@ $(document.body).on("click", ".gif", function () {
 });
 
 
-$(document.body).on("click", "#images", function () {
+$(document.body).on("click", ".gif", function () {
 
-    if($(this).attr("still-state") === "still"){
-      $(this).attr("src", "data-animate");
-      $(this).attr("still-state", "animate");
-    }
+  if ($(this).attr("data-state") === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+   // console.log($(this).attr("data-animate"));
 
-    if($(this).attr("still-state")=== "animate"){
-      $(this).attr("src", "data-still");
-      $(this).attr("still-state", "still");
-    }
+  } else if ($(this).attr("data-state") === "animate"){
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
 });
 
