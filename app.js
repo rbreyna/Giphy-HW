@@ -26,7 +26,7 @@ function printButtons() {
 function printGifs(name) {
 
   var search = name;
-  var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + API_key + "&limit=10";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + search + "&api_key=" + API_key + "&limit=10";
 
   console.log(queryURL);
 
